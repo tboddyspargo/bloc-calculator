@@ -45,7 +45,6 @@ class MenuController
       rescue Exception => e
         puts "There was a problem evaluating the expression. Ensure it is properly constructed and try again."
         puts e.message
-        puts e.backtrace.inspect
       end
       calc_menu
     end
