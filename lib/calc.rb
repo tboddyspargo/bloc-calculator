@@ -1,11 +1,18 @@
 ##
 # This class describes the functionality of the calculator application.
 class Calculator
-  attr_accessor :results
+  attr_accessor :history, :results
+  # A regular expression string to match all acceptable operators.
   OPERATOR_REGEX = "[+*\/^-]"
+  # A regular expression string to match all valid characters.
   INFIX_REGEX = "#{OPERATOR_REGEX}|[)(]|[0-9.]+"
+  # A regular expression string to match all invalid characters.
+  INVALID_REGEX = "[^0-9.)(+*\/^-]"
 
+  ##
+  # initialize a calculator object.
   def initialize
+    @history = []
     @results = []
   end
 
@@ -13,10 +20,13 @@ class Calculator
   # Function to evaluate a mathematic expression.
   # @param input [String] The string representation of the mathematic expression.
   def eval(input)
-    input = @results.last + input if input[0].match(/#{OPERATOR_REGEX}/) && !@results.empty?
+    # If first character is an operator and there is a previous result, start with that value as an operand.
+    input = @results.last.to_s + input if !@results.empty? && input[0].match(/#{OPERATOR_REGEX}/)
+    raise "Malformatted expression - invalid characters: #{input}" if input.match(/#{INVALID_REGEX}/)
     infix = input.scan(/#{INFIX_REGEX}/)
     postfix = to_postfix(infix)
     result = evaluate_postfix(postfix)
+    @history.push(input)
     @results.push(result)
     return result
   end
@@ -30,39 +40,44 @@ class Calculator
   def to_postfix(infix)
     stack = []
     postfix = []
-    infix.map(&:strip).each do |curr|
+    infix.map(&:strip).reduce(nil) do |prev, curr|
       operand = curr.match(/[\d.]+/)
       operator = curr.match(/#{OPERATOR_REGEX}/)
       left_parenthesis = curr == '('
       right_parenthesis = curr == ')'
       if operand
+        # raise error if number isn't valid format.
+        raise "Malformatted expression - not a valid number: #{curr}" if curr.match(/[\d.]+/).nil? || curr.count('.') > 1
         # add current number to postfix.
-        # puts "number: #{curr.to_f}"
         postfix.push(curr.to_f)
       elsif operator
+        # raise error if multiple operators in a row.
+        raise "Malformatted expression - consecutive operators: #{infix.join}" if !prev.nil? && prev.match(/#{OPERATOR_REGEX}/)
         # pop any operator of equal or higher precedence and add to postfix.
-        # puts "operator: #{curr}"
         while !stack.empty? && stack.last != '(' && has_equal_or_higher_precedence(stack.last, curr) do
           postfix.push(stack.pop)
         end
       elsif right_parenthesis
         # pop all operators on top of the last left parenthesis.
-        # puts "right: #{curr}"
         while !stack.empty? && stack.last != '(' do
           postfix.push(stack.pop)
         end
-        raise "Malformatted expression. #{curr}; #{infix}" if stack.empty?
+        # raise error if right parenthesis was provided without left.
+        raise "Malformatted expression - unmatched parenthesis: #{infix.join}" if stack.empty?
         # get rid of the parenthesis pair.
         stack.pop if stack.last == '('
       end
       # add the operator or the left parenthesis after stack work is done.
       stack.push(curr) if left_parenthesis || operator
-      # puts "#{curr}; #{postfix}; #{stack}; #{operator}"
+      # set curr as the 'prev' value in the next 'reduce' loop
+      curr
     end
+    # push any remaining operators to postfix.
     while !stack.empty? && stack.last.match(/#{OPERATOR_REGEX}/) do
       postfix.push(stack.pop)
     end
-    raise "Malformatted expression. #{infix}" if !stack.empty?
+    # raise error if any characters in stack are left unaccounted for.
+    raise "Malformatted expression - unmatched parenthesis: #{infix.join}" if !stack.empty?
     return postfix
   end
 
@@ -72,10 +87,10 @@ class Calculator
   # @return [Float] The result of the postfix array.
   def evaluate_postfix(postfix)
     stack = []
-    postfix.each do |curr|
+    postfix.compact.each do |curr|
       if curr.is_a?(Float)
         stack.push(curr)
-      else
+      elsif stack.count >= 2
         second = stack.pop
         first = stack.pop
         if curr == '+'
@@ -91,11 +106,12 @@ class Calculator
         else
           raise "Invalid character: #{curr}"
         end
-        # puts "#{first} #{curr} #{second} = #{stack.last}"
+      else
+        raise "Invalid expression"
       end
-      # puts "#{stack}"
     end
-    return stack.last
+    result = stack.last
+    return result == result.to_i ? result.to_i : result
   end
 
   ##

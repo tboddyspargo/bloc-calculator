@@ -1,14 +1,36 @@
 # Bloculator
-This is a command-line calculator application written in Ruby. It uses the postfix notation method to perform mathematic operations in the appropriate order even when provided complex expressions involving parenthesis, addition, subtraction, multiplication, division, and exponents.
+This is a command-line calculator application written in Ruby. It uses the [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) notation method to perform mathematic operations in the appropriate order even when provided complex expressions involving parenthesis, addition, subtraction, multiplication, division, and exponents.
+
+Bloculator makes use of `YARD` documentation gem to dynamically build documentation based on the formatted inline comments for the code.
+
+Bloculator includes unit tests written with ruby's built-in `MiniTest` gem in order to facilitate maintainability, meet goals by using test driven development, and ensure the calculator remains functional even as it is enhanced with future features.
+
+# Classes
+
+## Calculator
+
+This class encapsulates the calculator functionality.
+
+| Method | Description |
+| ------ | ----------- |
+| eval   | The primary function for evaluating a mathematic expression, this function takes a string as an argument and will return the result of the mathematic operations.
+| to_postfix | This function converts an 'infix' ordered array to a 'postfix' ordered array to facilitate executing from left to right.
+| evaluate_postfix | This function evaluates a post fix array and returns the resulting value.
+| has_equal_or_higher_precedence | This function determines whether the 'left' operator has an equal or higher precedence than the 'right' (passed as arguments) and returns a boolean. |
+
+## MenuController
+
+This class provides the 'UI' (such as it is) functionality for the command-line calculator.
+
+| Method | Description |
+| ------ | ----------- |
+| main_menu | This function displays the high-level options a user has (read expression history, result history, clear the view, or exit). |
+| calc_menu | This function displays the calculator prompt and reads the user's input. |
+
 
 # Usage
-To use the calculator, simply 'require' it in your ruby console/application and then instantiate a Calculator instance. You can then call the 'eval' method on your calculator instance and pass it a mathematic expression you would like to evaluate. The calculator even remembers your previous results. If you would like to use your previous result in a new expression, simply begin your next expression with the operator you'd like to use.
+To use the calculator, simply run the 'main.rb' ruby file.
 
-```ruby
-2.4.0 > require './calc.rb'
-2.4.0 > my_calc = Calculator.new
-2.4.0 > my_calc.eval("(62+1)/9")
-2.4.0 > 7.0
-2.4.0 > my_calc.eval("+14")
-2.4.0 > 21.0
+```bash
+$> ruby './lib/main.rb'
 ```
