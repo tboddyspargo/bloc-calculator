@@ -1,9 +1,12 @@
 # Bloculator
+
 This is a command-line calculator application written in Ruby. It uses the [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) notation method to perform mathematic operations in the appropriate order even when provided complex expressions involving parenthesis, addition, subtraction, multiplication, division, and exponents.
+
+![Calculator](https://tboddyspargo.github.io/img/bloculator_main.png)
 
 Bloculator makes use of `YARD` documentation gem to dynamically build documentation based on the formatted inline comments for the code.
 
-Bloculator includes unit tests written with ruby's built-in `MiniTest` gem in order to facilitate maintainability, meet goals by using test driven development, and ensure the calculator remains functional even as it is enhanced with future features.
+This ruby program also includes unit tests written with ruby's built-in `MiniTest` gem. These tests facilitate maintainability, make it easier to meet goals by using test driven development, and ensure the calculator remains functional even as it is enhanced with future features (preventing new code from breaking old code).
 
 # Classes
 
@@ -34,3 +37,10 @@ To use the calculator, simply run the 'main.rb' ruby file.
 ```bash
 $> ruby './lib/main.rb'
 ```
+
+Bloculator provides input options that allow you to clear the console as well as display all the previous mathematic expressions you've evaluated.
+
+![Calculator](https://tboddyspargo.github.io/img/bloculator_history.png)
+
+
+![Calculator](https://tboddyspargo.github.io/img/bloculator_results.png)
