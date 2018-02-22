@@ -2,9 +2,11 @@
 # This class describes the functionality of the calculator application.
 class Calculator
   attr_accessor :history, :results
-  # An arrays of acceptable operators
+  # An arrays of acceptable precedence 1 operators
   PRECEDENCE_1 = ["^"]
+  # An arrays of acceptable precedence 2 operators
   PRECEDENCE_2 = ["*","/","÷"]
+  # An arrays of acceptable precedence 3 operators
   PRECEDENCE_3 = ["+","-"]
   OPERATORS = PRECEDENCE_1+PRECEDENCE_2+PRECEDENCE_3   #  ('MINUS' MUST BE LAST)
   # A regular expression string to match all operators (and whitespace).

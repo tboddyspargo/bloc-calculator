@@ -58,11 +58,14 @@
       </div>
 
       <div id="content"><div id='filecontents'><h1 id="bloculator">Bloculator</h1>
+
 <p>This is a command-line calculator application written in Ruby. It uses the <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">postfix</a> notation method to perform mathematic operations in the appropriate order even when provided complex expressions involving parenthesis, addition, subtraction, multiplication, division, and exponents.</p>
+
+<p><img src="https://tboddyspargo.github.io/img/bloculator_main.png" alt="Calculator" /></p>
 
 <p>Bloculator makes use of <code>YARD</code> documentation gem to dynamically build documentation based on the formatted inline comments for the code.</p>
 
-<p>Bloculator includes unit tests written with ruby’s built-in <code>MiniTest</code> gem in order to facilitate maintainability, meet goals by using test driven development, and ensure the calculator remains functional even as it is enhanced with future features.</p>
+<p>This ruby program also includes unit tests written with ruby’s built-in <code>MiniTest</code> gem. These tests facilitate maintainability, make it easier to meet goals by using test driven development, and ensure the calculator remains functional even as it is enhanced with future features (preventing new code from breaking old code).</p>
 
 <h1 id="classes">Classes</h1>
 
@@ -126,10 +129,16 @@
 <p><code>bash
 $&gt; ruby './lib/main.rb'
 </code></p>
+
+<p>Bloculator provides input options that allow you to clear the console as well as display all the previous mathematic expressions you’ve evaluated.</p>
+
+<p><img src="https://tboddyspargo.github.io/img/bloculator_history.png" alt="Calculator" /></p>
+
+<p><img src="https://tboddyspargo.github.io/img/bloculator_results.png" alt="Calculator" /></p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Feb 20 00:18:27 2018 by
+  Generated on Wed Feb 21 18:19:35 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.4.0).
 </div>

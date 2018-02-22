@@ -114,11 +114,11 @@
   <h2>Constant Summary</h2>
   <dl class="constants">
     
-      <dt id="OPERATOR_REGEX-constant" class="">OPERATOR_REGEX =
+      <dt id="PRECEDENCE_1-constant" class="">PRECEDENCE_1 =
         <div class="docstring">
   <div class="discussion">
     
-<p>A regular expression string to match all acceptable operators.</p>
+<p>An arrays of acceptable precedence 1 operators</p>
 
 
   </div>
@@ -128,13 +128,109 @@
 
 </div>
       </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[+*\/^-]</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>^</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span></pre></dd>
+    
+      <dt id="PRECEDENCE_2-constant" class="">PRECEDENCE_2 =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>An arrays of acceptable precedence 2 operators</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>÷</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span></pre></dd>
+    
+      <dt id="PRECEDENCE_3-constant" class="">PRECEDENCE_3 =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>An arrays of acceptable precedence 3 operators</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span></pre></dd>
+    
+      <dt id="OPERATORS-constant" class="">OPERATORS =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>(&#39;MINUS&#39; MUST BE LAST)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='const'><span class='object_link'><a href="#PRECEDENCE_1-constant" title="Calculator::PRECEDENCE_1 (constant)">PRECEDENCE_1</a></span></span><span class='op'>+</span><span class='const'><span class='object_link'><a href="#PRECEDENCE_2-constant" title="Calculator::PRECEDENCE_2 (constant)">PRECEDENCE_2</a></span></span><span class='op'>+</span><span class='const'><span class='object_link'><a href="#PRECEDENCE_3-constant" title="Calculator::PRECEDENCE_3 (constant)">PRECEDENCE_3</a></span></span></pre></dd>
+    
+      <dt id="OPERATOR_STRING-constant" class="">OPERATOR_STRING =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>A regular expression string to match all operators (and whitespace).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[\s</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#OPERATORS-constant" title="Calculator::OPERATORS (constant)">OPERATORS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+    
+      <dt id="NUM_STRING-constant" class="">NUM_STRING =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>A regular expression string to match all numbers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-?[0-9.]+</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+    
+      <dt id="NUM_REGEX-constant" class="">NUM_REGEX =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>A regular expression to match all numbers (include negative).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#NUM_STRING-constant" title="Calculator::NUM_STRING (constant)">NUM_STRING</a></span></span><span class='embexpr_end'>}</span><span class='regexp_end'>/</span></span></pre></dd>
     
       <dt id="INFIX_REGEX-constant" class="">INFIX_REGEX =
         <div class="docstring">
   <div class="discussion">
     
-<p>A regular expression string to match all valid characters.</p>
+<p>A regular expression to match all valid characters.</p>
 
 
   </div>
@@ -144,13 +240,13 @@
 
 </div>
       </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#OPERATOR_REGEX-constant" title="Calculator::OPERATOR_REGEX (constant)">OPERATOR_REGEX</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>|[)(]|[0-9.]+</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[)(]|(?&lt;=^|</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#OPERATOR_STRING-constant" title="Calculator::OPERATOR_STRING (constant)">OPERATOR_STRING</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#NUM_STRING-constant" title="Calculator::NUM_STRING (constant)">NUM_STRING</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>|</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#OPERATOR_STRING-constant" title="Calculator::OPERATOR_STRING (constant)">OPERATOR_STRING</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>|</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#NUM_STRING-constant" title="Calculator::NUM_STRING (constant)">NUM_STRING</a></span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='regexp_end'>/</span></span></pre></dd>
     
       <dt id="INVALID_REGEX-constant" class="">INVALID_REGEX =
         <div class="docstring">
   <div class="discussion">
     
-<p>A regular expression string to match all invalid characters.</p>
+<p>A regular expression to match all invalid characters.</p>
 
 
   </div>
@@ -160,7 +256,7 @@
 
 </div>
       </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[^0-9.)(+*\/^-]</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[^0-9.)(\s</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#OPERATORS-constant" title="Calculator::OPERATORS (constant)">OPERATORS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='regexp_end'>/</span></span></pre></dd>
     
   </dl>
 
@@ -319,13 +415,13 @@
       <pre class="lines">
 
 
-14
-15
-16
-17</pre>
+25
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/calc.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/calc.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@history</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -480,26 +576,28 @@
       <pre class="lines">
 
 
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/calc.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/calc.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input'>input</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='comment'># If first character is an operator and there is a previous result, start with that value as an operand.
-</span>  <span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='id identifier rubyid_input'>input</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_input'>input</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#OPERATOR_REGEX-constant" title="Calculator::OPERATOR_REGEX (constant)">OPERATOR_REGEX</a></span></span><span class='embexpr_end'>}</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Malformatted expression - invalid characters: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input'>input</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#INVALID_REGEX-constant" title="Calculator::INVALID_REGEX (constant)">INVALID_REGEX</a></span></span><span class='embexpr_end'>}</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_infix'>infix</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#INFIX_REGEX-constant" title="Calculator::INFIX_REGEX (constant)">INFIX_REGEX</a></span></span><span class='embexpr_end'>}</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='id identifier rubyid_input'>input</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="#OPERATORS-constant" title="Calculator::OPERATORS (constant)">OPERATORS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Malformatted expression - invalid characters: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input'>input</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#INVALID_REGEX-constant" title="Calculator::INVALID_REGEX (constant)">INVALID_REGEX</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_infix'>infix</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#INFIX_REGEX-constant" title="Calculator::INFIX_REGEX (constant)">INFIX_REGEX</a></span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_postfix'>postfix</span> <span class='op'>=</span> <span class='id identifier rubyid_to_postfix'>to_postfix</span><span class='lparen'>(</span><span class='id identifier rubyid_infix'>infix</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_evaluate_postfix'>evaluate_postfix</span><span class='lparen'>(</span><span class='id identifier rubyid_postfix'>postfix</span><span class='rparen'>)</span>
   <span class='ivar'>@history</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
@@ -516,7 +614,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Feb 20 00:18:27 2018 by
+  Generated on Wed Feb 21 18:19:35 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.4.0).
 </div>
