@@ -2,13 +2,13 @@
 # This class describes the functionality of the calculator application.
 class Calculator
   attr_accessor :history, :results
-  # An arrays of acceptable precedence 1 operators
-  PRECEDENCE_1 = ["^"]
+  # An arrays of acceptable precedence 3 operators
+  PRECEDENCE_3 = ["^"]
   # An arrays of acceptable precedence 2 operators
   PRECEDENCE_2 = ["*","/","÷"]
-  # An arrays of acceptable precedence 3 operators
-  PRECEDENCE_3 = ["+","-"]
-  OPERATORS = PRECEDENCE_1+PRECEDENCE_2+PRECEDENCE_3   #  ('MINUS' MUST BE LAST)
+  # An arrays of acceptable precedence 1 operators
+  PRECEDENCE_1 = ["+","-"]
+  OPERATORS = PRECEDENCE_3+PRECEDENCE_2+PRECEDENCE_1   #  ('MINUS' MUST BE LAST)
   # A regular expression string to match all operators (and whitespace).
   OPERATOR_STRING = "[\s#{OPERATORS.join}]"
   # A regular expression string to match all numbers.
@@ -31,7 +31,6 @@ class Calculator
   # Function to evaluate a mathematic expression.
   # @param input [String] The string representation of the mathematic expression.
   def eval(input)
-    puts "#{input}"
     # If first character is an operator and there is a previous result, start with that value as an operand.
     input = @results.last.to_s + input if !@results.empty? && OPERATORS.include?(input[0])
     raise "Malformatted expression - invalid characters: #{input}" if input.match(INVALID_REGEX)
@@ -52,14 +51,13 @@ class Calculator
   def to_postfix(infix)
     stack = []
     postfix = []
-    puts "#{infix}"
     infix.map(&:strip).reduce(nil) do |prev, curr|
-      operand = curr.match(NUM_REGEX)
-      negative = operand && curr[0] == '-'
-      operator = OPERATORS.include?(curr)
-      left_parenthesis = curr == '('
-      right_parenthesis = curr == ')'
-      if !prev.nil? && operand && negative && prev.match(NUM_REGEX)
+      is_operand = curr.match(NUM_REGEX)
+      is_negative = is_operand && curr[0] == '-'
+      is_operator = OPERATORS.include?(curr)
+      is_left_parenthesis = curr == '('
+      is_right_parenthesis = curr == ')'
+      if !prev.nil? && is_operand && is_negative && prev.match(NUM_REGEX)
         # Couldn't distinguish between a negative number and a subtraction operator + positive number.
         # We will split this string and perform both operations (adding '-' to stack and number to postfix)
         num = curr[1..curr.length]
@@ -70,19 +68,19 @@ class Calculator
         end
         stack.push(curr)
         postfix.push(num.to_f)
-      elsif operand
+      elsif is_operand
         # raise error if number isn't valid format.
         raise "Malformatted expression - not a valid number: #{curr}" if curr.match(NUM_REGEX).nil? || curr.count('.') > 1
         # add current number to postfix.
         postfix.push(curr.to_f)
-      elsif operator
+      elsif is_operator
         # raise error if multiple operators in a row.
         raise "Malformatted expression - consecutive operators: #{infix.join}" if !prev.nil? && OPERATORS.include?(prev)
         # pop any operator of equal or higher precedence and add to postfix.
         while !stack.empty? && stack.last != '(' && has_equal_or_higher_precedence(stack.last, curr) do
           postfix.push(stack.pop)
         end
-      elsif right_parenthesis
+      elsif is_right_parenthesis
         # pop all operators on top of the last left parenthesis.
         while !stack.empty? && stack.last != '(' do
           postfix.push(stack.pop)
@@ -93,7 +91,7 @@ class Calculator
         stack.pop if stack.last == '('
       end
       # add the operator or the left parenthesis after stack work is done.
-      stack.push(curr) if left_parenthesis || operator
+      stack.push(curr) if is_left_parenthesis || is_operator
       # set curr as the 'prev' value in the next 'reduce' loop
       curr
     end
@@ -144,10 +142,17 @@ class Calculator
   # @param right [String] the right operator
   # @return [Boolean] whether or not the left operator has a higher precendence than the right.
   def has_equal_or_higher_precedence(left, right)
-    add = ['-','+']
-    mult = ['*','/','÷']
-    pow = ['^']
-    return false if (pow.include?(right) && !pow.include?(left)) || (mult.include?(right) && add.include?(left))
+    ops = [PRECEDENCE_1.join, PRECEDENCE_2.join, PRECEDENCE_3.join]
+    index = 0
+    precedence_left = precedence_right = -1
+    ops.each do |o|
+      precedence_left = index if o.include?(left)
+      precedence_right = index if o.include?(right)
+      index += 1
+    end
+    raise "Invalid operator: #{left}" if precedence_left == -1
+    raise "Invalid operator: #{right}" if precedence_right == -1
+    return false if precedence_left < precedence_right
     return true
   end
 
